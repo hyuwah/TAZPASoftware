@@ -1,6 +1,7 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
-    Inherits System.Windows.Forms.Form
+    'Inherits System.Windows.Forms.Form
+    Inherits MaterialSkin.Controls.MaterialForm
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -23,36 +24,33 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim Title1 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
-        Me.txtClock = New System.Windows.Forms.ToolStripLabel()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripLabel1 = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ToolStripLabel2 = New System.Windows.Forms.ToolStripLabel()
         Me.tscbbPort = New System.Windows.Forms.ToolStripComboBox()
         Me.ToolStripLabel3 = New System.Windows.Forms.ToolStripLabel()
         Me.tscbbBaud = New System.Windows.Forms.ToolStripComboBox()
-        Me.tsbtnConnection = New System.Windows.Forms.ToolStripButton()
-        Me.tslblStatus = New System.Windows.Forms.ToolStripLabel()
-        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TabControl1 = New MaterialSkin.Controls.MaterialTabControl()
         Me.tabMonitor = New System.Windows.Forms.TabPage()
+        Me.MaterialListView1 = New MaterialSkin.Controls.MaterialListView()
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.gbParameter = New System.Windows.Forms.GroupBox()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnParamSet = New System.Windows.Forms.Button()
-        Me.btnParamEdit = New System.Windows.Forms.Button()
-        Me.btnParamLoad = New System.Windows.Forms.Button()
-        Me.btnParamSave = New System.Windows.Forms.Button()
+        Me.MaterialDivider1 = New MaterialSkin.Controls.MaterialDivider()
+        Me.tbNama = New System.Windows.Forms.TextBox()
+        Me.lblNamaSampel = New System.Windows.Forms.Label()
+        Me.ParamPanel = New System.Windows.Forms.Panel()
+        Me.btnParamSet = New MaterialSkin.Controls.MaterialFlatButton()
+        Me.btnParamEdit = New MaterialSkin.Controls.MaterialFlatButton()
+        Me.btnParamLoad = New MaterialSkin.Controls.MaterialFlatButton()
+        Me.btnParamSave = New MaterialSkin.Controls.MaterialFlatButton()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -80,94 +78,48 @@ Partial Class Form1
         Me.Label9 = New System.Windows.Forms.Label()
         Me.gbGrafik = New System.Windows.Forms.GroupBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.btnSaveData = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnSaveData = New MaterialSkin.Controls.MaterialRaisedButton()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.gbTerminal = New System.Windows.Forms.GroupBox()
-        Me.rtbReceived = New System.Windows.Forms.RichTextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.sfdData = New System.Windows.Forms.SaveFileDialog()
-        Me.MenuStrip1.SuspendLayout()
+        Me.MaterialTabSelector1 = New MaterialSkin.Controls.MaterialTabSelector()
+        Me.tsbtnConnectionAlt = New MaterialSkin.Controls.MaterialFlatButton()
+        Me.tslblStatusAlt = New MaterialSkin.Controls.MaterialLabel()
+        Me.tsbtnRefresh = New MaterialSkin.Controls.MaterialFlatButton()
+        Me.MaterialDivider2 = New MaterialSkin.Controls.MaterialDivider()
+        Me.sfdParam = New System.Windows.Forms.SaveFileDialog()
+        Me.ofdParam = New System.Windows.Forms.OpenFileDialog()
+        Me.txtClockAlt = New System.Windows.Forms.Label()
         Me.ToolStrip1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabMonitor.SuspendLayout()
         Me.gbParameter.SuspendLayout()
-        Me.Panel1.SuspendLayout()
+        Me.ParamPanel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.gbGrafik.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.gbTerminal.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'MenuStrip1
-        '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(842, 24)
-        Me.MenuStrip1.TabIndex = 21
-        Me.MenuStrip1.Text = "MenuStrip1"
-        '
-        'FileToolStripMenuItem
-        '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ExitToolStripMenuItem})
-        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.FileToolStripMenuItem.Text = "File"
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(92, 22)
-        Me.ExitToolStripMenuItem.Text = "Exit"
-        '
-        'HelpToolStripMenuItem
-        '
-        Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.HelpToolStripMenuItem1, Me.AboutToolStripMenuItem})
-        Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
-        Me.HelpToolStripMenuItem.Text = "Help"
-        '
-        'HelpToolStripMenuItem1
-        '
-        Me.HelpToolStripMenuItem1.Name = "HelpToolStripMenuItem1"
-        Me.HelpToolStripMenuItem1.Size = New System.Drawing.Size(107, 22)
-        Me.HelpToolStripMenuItem1.Text = "Help"
-        '
-        'AboutToolStripMenuItem
-        '
-        Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
-        Me.AboutToolStripMenuItem.Text = "About"
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.txtClock, Me.ToolStripSeparator1, Me.ToolStripLabel1, Me.ToolStripSeparator2, Me.ToolStripLabel2, Me.tscbbPort, Me.ToolStripLabel3, Me.tscbbBaud, Me.tsbtnConnection, Me.tslblStatus})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
+        Me.ToolStrip1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ToolStrip1.BackColor = System.Drawing.Color.Transparent
+        Me.ToolStrip1.Dock = System.Windows.Forms.DockStyle.None
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripLabel1, Me.ToolStripSeparator2, Me.ToolStripLabel2, Me.tscbbPort, Me.ToolStripLabel3, Me.tscbbBaud})
+        Me.ToolStrip1.Location = New System.Drawing.Point(5, 570)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(842, 25)
+        Me.ToolStrip1.Size = New System.Drawing.Size(503, 25)
         Me.ToolStrip1.TabIndex = 22
         Me.ToolStrip1.Text = "ToolStrip1"
         '
-        'txtClock
-        '
-        Me.txtClock.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.txtClock.Name = "txtClock"
-        Me.txtClock.Size = New System.Drawing.Size(29, 22)
-        Me.txtClock.Text = "Jam"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(6, 25)
-        '
         'ToolStripLabel1
         '
+        Me.ToolStripLabel1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.ToolStripLabel1.Name = "ToolStripLabel1"
-        Me.ToolStripLabel1.Size = New System.Drawing.Size(106, 22)
+        Me.ToolStripLabel1.Size = New System.Drawing.Size(108, 22)
         Me.ToolStripLabel1.Text = "Board Connection:"
         '
         'ToolStripSeparator2
@@ -177,40 +129,29 @@ Partial Class Form1
         '
         'ToolStripLabel2
         '
+        Me.ToolStripLabel2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.ToolStripLabel2.Name = "ToolStripLabel2"
         Me.ToolStripLabel2.Size = New System.Drawing.Size(63, 22)
         Me.ToolStripLabel2.Text = "COM Port:"
         '
         'tscbbPort
         '
+        Me.tscbbPort.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.tscbbPort.Name = "tscbbPort"
         Me.tscbbPort.Size = New System.Drawing.Size(121, 25)
         '
         'ToolStripLabel3
         '
+        Me.ToolStripLabel3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.ToolStripLabel3.Name = "ToolStripLabel3"
-        Me.ToolStripLabel3.Size = New System.Drawing.Size(63, 22)
+        Me.ToolStripLabel3.Size = New System.Drawing.Size(68, 22)
         Me.ToolStripLabel3.Text = "Baud Rate:"
         '
         'tscbbBaud
         '
+        Me.tscbbBaud.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Me.tscbbBaud.Name = "tscbbBaud"
         Me.tscbbBaud.Size = New System.Drawing.Size(121, 25)
-        '
-        'tsbtnConnection
-        '
-        Me.tsbtnConnection.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.tsbtnConnection.Image = CType(resources.GetObject("tsbtnConnection.Image"), System.Drawing.Image)
-        Me.tsbtnConnection.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbtnConnection.Name = "tsbtnConnection"
-        Me.tsbtnConnection.Size = New System.Drawing.Size(56, 22)
-        Me.tsbtnConnection.Text = "Connect"
-        '
-        'tslblStatus
-        '
-        Me.tslblStatus.Name = "tslblStatus"
-        Me.tslblStatus.Size = New System.Drawing.Size(116, 22)
-        Me.tslblStatus.Text = "No board connected"
         '
         'TabControl1
         '
@@ -218,91 +159,192 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.TabControl1.Controls.Add(Me.tabMonitor)
-        Me.TabControl1.Location = New System.Drawing.Point(0, 52)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Depth = 0
+        Me.TabControl1.Location = New System.Drawing.Point(5, 90)
+        Me.TabControl1.Margin = New System.Windows.Forms.Padding(10)
+        Me.TabControl1.MouseState = MaterialSkin.MouseState.HOVER
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(842, 473)
+        Me.TabControl1.Size = New System.Drawing.Size(950, 470)
         Me.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight
         Me.TabControl1.TabIndex = 33
         '
         'tabMonitor
         '
+        Me.tabMonitor.Controls.Add(Me.MaterialListView1)
         Me.tabMonitor.Controls.Add(Me.gbParameter)
         Me.tabMonitor.Controls.Add(Me.gbGrafik)
-        Me.tabMonitor.Controls.Add(Me.gbTerminal)
         Me.tabMonitor.Location = New System.Drawing.Point(4, 22)
         Me.tabMonitor.Name = "tabMonitor"
         Me.tabMonitor.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabMonitor.Size = New System.Drawing.Size(834, 447)
+        Me.tabMonitor.Size = New System.Drawing.Size(942, 444)
         Me.tabMonitor.TabIndex = 0
         Me.tabMonitor.Text = "Monitor"
         Me.tabMonitor.UseVisualStyleBackColor = True
+        '
+        'MaterialListView1
+        '
+        Me.MaterialListView1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MaterialListView1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MaterialListView1.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.MaterialListView1.Depth = 0
+        Me.MaterialListView1.Font = New System.Drawing.Font("Roboto", 32.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World)
+        Me.MaterialListView1.FullRowSelect = True
+        Me.MaterialListView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.MaterialListView1.Location = New System.Drawing.Point(701, 3)
+        Me.MaterialListView1.MouseLocation = New System.Drawing.Point(-1, -1)
+        Me.MaterialListView1.MouseState = MaterialSkin.MouseState.OUT
+        Me.MaterialListView1.Name = "MaterialListView1"
+        Me.MaterialListView1.OwnerDraw = True
+        Me.MaterialListView1.Size = New System.Drawing.Size(235, 437)
+        Me.MaterialListView1.TabIndex = 45
+        Me.MaterialListView1.UseCompatibleStateImageBehavior = False
+        Me.MaterialListView1.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Waktu"
+        Me.ColumnHeader1.Width = 69
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "Es(mV)"
+        Me.ColumnHeader2.Width = 76
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "ZP(mV)"
+        Me.ColumnHeader3.Width = 84
         '
         'gbParameter
         '
         Me.gbParameter.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.gbParameter.Controls.Add(Me.Panel1)
+        Me.gbParameter.BackColor = System.Drawing.Color.White
+        Me.gbParameter.Controls.Add(Me.MaterialDivider1)
+        Me.gbParameter.Controls.Add(Me.tbNama)
+        Me.gbParameter.Controls.Add(Me.lblNamaSampel)
+        Me.gbParameter.Controls.Add(Me.ParamPanel)
         Me.gbParameter.Controls.Add(Me.TextBox1)
         Me.gbParameter.Controls.Add(Me.TableLayoutPanel1)
+        Me.gbParameter.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbParameter.Location = New System.Drawing.Point(8, 6)
         Me.gbParameter.Name = "gbParameter"
-        Me.gbParameter.Size = New System.Drawing.Size(225, 441)
+        Me.gbParameter.Size = New System.Drawing.Size(225, 438)
         Me.gbParameter.TabIndex = 43
         Me.gbParameter.TabStop = False
-        Me.gbParameter.Text = "Parameter Sampel"
+        Me.gbParameter.Text = "Parameter Pengukuran"
         '
-        'Panel1
+        'MaterialDivider1
         '
-        Me.Panel1.BackColor = System.Drawing.SystemColors.Control
-        Me.Panel1.Controls.Add(Me.btnParamSet)
-        Me.Panel1.Controls.Add(Me.btnParamEdit)
-        Me.Panel1.Controls.Add(Me.btnParamLoad)
-        Me.Panel1.Controls.Add(Me.btnParamSave)
-        Me.Panel1.Location = New System.Drawing.Point(6, 243)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(213, 122)
-        Me.Panel1.TabIndex = 7
+        Me.MaterialDivider1.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.MaterialDivider1.Depth = 0
+        Me.MaterialDivider1.Location = New System.Drawing.Point(12, 332)
+        Me.MaterialDivider1.MouseState = MaterialSkin.MouseState.HOVER
+        Me.MaterialDivider1.Name = "MaterialDivider1"
+        Me.MaterialDivider1.Size = New System.Drawing.Size(200, 1)
+        Me.MaterialDivider1.TabIndex = 10
+        Me.MaterialDivider1.Text = "MaterialDivider1"
+        '
+        'tbNama
+        '
+        Me.tbNama.Location = New System.Drawing.Point(91, 22)
+        Me.tbNama.Name = "tbNama"
+        Me.tbNama.Size = New System.Drawing.Size(128, 20)
+        Me.tbNama.TabIndex = 9
+        '
+        'lblNamaSampel
+        '
+        Me.lblNamaSampel.AutoSize = True
+        Me.lblNamaSampel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNamaSampel.Location = New System.Drawing.Point(6, 24)
+        Me.lblNamaSampel.Name = "lblNamaSampel"
+        Me.lblNamaSampel.Size = New System.Drawing.Size(79, 13)
+        Me.lblNamaSampel.TabIndex = 8
+        Me.lblNamaSampel.Text = "Nama Sampel :"
+        '
+        'ParamPanel
+        '
+        Me.ParamPanel.BackColor = System.Drawing.SystemColors.Control
+        Me.ParamPanel.Controls.Add(Me.btnParamSet)
+        Me.ParamPanel.Controls.Add(Me.btnParamEdit)
+        Me.ParamPanel.Controls.Add(Me.btnParamLoad)
+        Me.ParamPanel.Controls.Add(Me.btnParamSave)
+        Me.ParamPanel.Location = New System.Drawing.Point(8, 284)
+        Me.ParamPanel.Name = "ParamPanel"
+        Me.ParamPanel.Size = New System.Drawing.Size(208, 36)
+        Me.ParamPanel.TabIndex = 7
         '
         'btnParamSet
         '
-        Me.btnParamSet.Location = New System.Drawing.Point(3, 3)
+        Me.btnParamSet.AutoSize = True
+        Me.btnParamSet.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.btnParamSet.BackColor = System.Drawing.SystemColors.Control
+        Me.btnParamSet.Depth = 0
+        Me.btnParamSet.Icon = Nothing
+        Me.btnParamSet.Location = New System.Drawing.Point(0, 0)
+        Me.btnParamSet.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.btnParamSet.MouseState = MaterialSkin.MouseState.HOVER
         Me.btnParamSet.Name = "btnParamSet"
-        Me.btnParamSet.Size = New System.Drawing.Size(207, 23)
+        Me.btnParamSet.Primary = True
+        Me.btnParamSet.Size = New System.Drawing.Size(45, 36)
         Me.btnParamSet.TabIndex = 1
         Me.btnParamSet.Text = "Set"
-        Me.btnParamSet.UseVisualStyleBackColor = True
+        Me.btnParamSet.UseVisualStyleBackColor = False
         '
         'btnParamEdit
         '
-        Me.btnParamEdit.Location = New System.Drawing.Point(3, 32)
+        Me.btnParamEdit.AutoSize = True
+        Me.btnParamEdit.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.btnParamEdit.Depth = 0
+        Me.btnParamEdit.Icon = Nothing
+        Me.btnParamEdit.Location = New System.Drawing.Point(45, 0)
+        Me.btnParamEdit.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.btnParamEdit.MouseState = MaterialSkin.MouseState.HOVER
         Me.btnParamEdit.Name = "btnParamEdit"
-        Me.btnParamEdit.Size = New System.Drawing.Size(207, 23)
+        Me.btnParamEdit.Primary = True
+        Me.btnParamEdit.Size = New System.Drawing.Size(50, 36)
         Me.btnParamEdit.TabIndex = 4
         Me.btnParamEdit.Text = "Edit"
         Me.btnParamEdit.UseVisualStyleBackColor = True
         '
         'btnParamLoad
         '
-        Me.btnParamLoad.Location = New System.Drawing.Point(3, 90)
+        Me.btnParamLoad.AutoSize = True
+        Me.btnParamLoad.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.btnParamLoad.Depth = 0
+        Me.btnParamLoad.Icon = Nothing
+        Me.btnParamLoad.Location = New System.Drawing.Point(152, 0)
+        Me.btnParamLoad.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.btnParamLoad.MouseState = MaterialSkin.MouseState.HOVER
         Me.btnParamLoad.Name = "btnParamLoad"
-        Me.btnParamLoad.Size = New System.Drawing.Size(207, 23)
+        Me.btnParamLoad.Primary = False
+        Me.btnParamLoad.Size = New System.Drawing.Size(56, 36)
         Me.btnParamLoad.TabIndex = 3
         Me.btnParamLoad.Text = "Load"
         Me.btnParamLoad.UseVisualStyleBackColor = True
         '
         'btnParamSave
         '
-        Me.btnParamSave.Location = New System.Drawing.Point(3, 61)
+        Me.btnParamSave.AutoSize = True
+        Me.btnParamSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.btnParamSave.Depth = 0
+        Me.btnParamSave.Icon = Nothing
+        Me.btnParamSave.Location = New System.Drawing.Point(96, 0)
+        Me.btnParamSave.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.btnParamSave.MouseState = MaterialSkin.MouseState.HOVER
         Me.btnParamSave.Name = "btnParamSave"
-        Me.btnParamSave.Size = New System.Drawing.Size(207, 23)
+        Me.btnParamSave.Primary = False
+        Me.btnParamSave.Size = New System.Drawing.Size(55, 36)
         Me.btnParamSave.TabIndex = 2
         Me.btnParamSave.Text = "Save"
         Me.btnParamSave.UseVisualStyleBackColor = True
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(6, 415)
+        Me.TextBox1.Location = New System.Drawing.Point(6, 344)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(213, 20)
         Me.TextBox1.TabIndex = 5
@@ -339,7 +381,7 @@ Partial Class Form1
         Me.TableLayoutPanel1.Controls.Add(Me.Label7, 2, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.Label8, 2, 6)
         Me.TableLayoutPanel1.Controls.Add(Me.Label9, 2, 7)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 19)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(6, 60)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 8
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
@@ -381,6 +423,7 @@ Partial Class Form1
         '
         Me.lblParam1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.lblParam1.AutoSize = True
+        Me.lblParam1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblParam1.Location = New System.Drawing.Point(8, 1)
         Me.lblParam1.Name = "lblParam1"
         Me.lblParam1.Size = New System.Drawing.Size(67, 26)
@@ -619,11 +662,13 @@ Partial Class Form1
         Me.gbGrafik.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbGrafik.BackColor = System.Drawing.Color.White
         Me.gbGrafik.Controls.Add(Me.Panel2)
         Me.gbGrafik.Controls.Add(Me.Chart1)
+        Me.gbGrafik.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.gbGrafik.Location = New System.Drawing.Point(239, 6)
         Me.gbGrafik.Name = "gbGrafik"
-        Me.gbGrafik.Size = New System.Drawing.Size(437, 441)
+        Me.gbGrafik.Size = New System.Drawing.Size(456, 438)
         Me.gbGrafik.TabIndex = 44
         Me.gbGrafik.TabStop = False
         Me.gbGrafik.Text = "Grafik"
@@ -632,32 +677,28 @@ Partial Class Form1
         '
         Me.Panel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel2.BackColor = System.Drawing.Color.White
         Me.Panel2.Controls.Add(Me.btnSaveData)
-        Me.Panel2.Controls.Add(Me.Button1)
-        Me.Panel2.Location = New System.Drawing.Point(6, 362)
+        Me.Panel2.Location = New System.Drawing.Point(6, 388)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(425, 79)
+        Me.Panel2.Size = New System.Drawing.Size(444, 42)
         Me.Panel2.TabIndex = 41
         '
         'btnSaveData
         '
         Me.btnSaveData.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSaveData.AutoSize = True
+        Me.btnSaveData.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.btnSaveData.Depth = 0
+        Me.btnSaveData.Icon = Nothing
         Me.btnSaveData.Location = New System.Drawing.Point(347, 3)
+        Me.btnSaveData.MouseState = MaterialSkin.MouseState.HOVER
         Me.btnSaveData.Name = "btnSaveData"
-        Me.btnSaveData.Size = New System.Drawing.Size(75, 23)
+        Me.btnSaveData.Primary = True
+        Me.btnSaveData.Size = New System.Drawing.Size(94, 36)
         Me.btnSaveData.TabIndex = 40
         Me.btnSaveData.Text = "Save Data"
         Me.btnSaveData.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 39
-        Me.Button1.Text = "Test Add"
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'Chart1
         '
@@ -687,6 +728,8 @@ Partial Class Form1
         Me.Chart1.ChartAreas.Add(ChartArea1)
         Legend1.DockedToChartArea = "ChartArea1"
         Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top
+        Legend1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
+        Legend1.IsTextAutoFit = False
         Legend1.Name = "Legend1"
         Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(6, 19)
@@ -694,56 +737,31 @@ Partial Class Form1
         Series1.BorderWidth = 2
         Series1.ChartArea = "ChartArea1"
         Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
+        Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Series1.Legend = "Legend1"
         Series1.MarkerBorderColor = System.Drawing.Color.Transparent
         Series1.MarkerSize = 8
         Series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle
-        Series1.Name = "Series1"
+        Series1.Name = "Potensial Zeta"
         Series1.ToolTip = "#VAL{G} mV"
         Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Size = New System.Drawing.Size(425, 337)
+        Me.Chart1.Size = New System.Drawing.Size(444, 363)
         Me.Chart1.TabIndex = 38
         Me.Chart1.Text = "Chart1"
-        Title1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold)
+        Title1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!)
         Title1.Name = "Title1"
         Title1.Text = "Grafik Potensial Zeta"
         Me.Chart1.Titles.Add(Title1)
         '
-        'gbTerminal
+        'TabPage1
         '
-        Me.gbTerminal.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.gbTerminal.Controls.Add(Me.rtbReceived)
-        Me.gbTerminal.Controls.Add(Me.Label2)
-        Me.gbTerminal.Location = New System.Drawing.Point(682, 6)
-        Me.gbTerminal.Name = "gbTerminal"
-        Me.gbTerminal.Size = New System.Drawing.Size(146, 441)
-        Me.gbTerminal.TabIndex = 45
-        Me.gbTerminal.TabStop = False
-        Me.gbTerminal.Text = "Terminal"
-        '
-        'rtbReceived
-        '
-        Me.rtbReceived.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.rtbReceived.Location = New System.Drawing.Point(6, 39)
-        Me.rtbReceived.Name = "rtbReceived"
-        Me.rtbReceived.ReadOnly = True
-        Me.rtbReceived.Size = New System.Drawing.Size(134, 396)
-        Me.rtbReceived.TabIndex = 37
-        Me.rtbReceived.Text = ""
-        '
-        'Label2
-        '
-        Me.Label2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(21, 23)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(108, 13)
-        Me.Label2.TabIndex = 42
-        Me.Label2.Text = "Time    |    Es(mV)"
+        Me.TabPage1.BackColor = System.Drawing.Color.White
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(942, 444)
+        Me.TabPage1.TabIndex = 1
+        Me.TabPage1.Text = "Help"
         '
         'Timer1
         '
@@ -753,72 +771,148 @@ Partial Class Form1
         'SerialPort1
         '
         '
+        'MaterialTabSelector1
+        '
+        Me.MaterialTabSelector1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MaterialTabSelector1.BaseTabControl = Me.TabControl1
+        Me.MaterialTabSelector1.Depth = 0
+        Me.MaterialTabSelector1.Location = New System.Drawing.Point(0, 60)
+        Me.MaterialTabSelector1.MouseState = MaterialSkin.MouseState.HOVER
+        Me.MaterialTabSelector1.Name = "MaterialTabSelector1"
+        Me.MaterialTabSelector1.Size = New System.Drawing.Size(960, 30)
+        Me.MaterialTabSelector1.TabIndex = 34
+        Me.MaterialTabSelector1.Text = "MaterialTabSelector1"
+        '
+        'tsbtnConnectionAlt
+        '
+        Me.tsbtnConnectionAlt.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tsbtnConnectionAlt.AutoSize = True
+        Me.tsbtnConnectionAlt.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.tsbtnConnectionAlt.Depth = 0
+        Me.tsbtnConnectionAlt.Icon = Nothing
+        Me.tsbtnConnectionAlt.Location = New System.Drawing.Point(678, 561)
+        Me.tsbtnConnectionAlt.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.tsbtnConnectionAlt.MouseState = MaterialSkin.MouseState.HOVER
+        Me.tsbtnConnectionAlt.Name = "tsbtnConnectionAlt"
+        Me.tsbtnConnectionAlt.Primary = True
+        Me.tsbtnConnectionAlt.Size = New System.Drawing.Size(84, 36)
+        Me.tsbtnConnectionAlt.TabIndex = 35
+        Me.tsbtnConnectionAlt.Text = "Connect"
+        Me.tsbtnConnectionAlt.UseVisualStyleBackColor = True
+        '
+        'tslblStatusAlt
+        '
+        Me.tslblStatusAlt.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tslblStatusAlt.AutoSize = True
+        Me.tslblStatusAlt.Depth = 0
+        Me.tslblStatusAlt.Font = New System.Drawing.Font("Roboto", 11.0!)
+        Me.tslblStatusAlt.ForeColor = System.Drawing.Color.FromArgb(CType(CType(222, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.tslblStatusAlt.Location = New System.Drawing.Point(789, 569)
+        Me.tslblStatusAlt.MouseState = MaterialSkin.MouseState.HOVER
+        Me.tslblStatusAlt.Name = "tslblStatusAlt"
+        Me.tslblStatusAlt.Size = New System.Drawing.Size(145, 19)
+        Me.tslblStatusAlt.TabIndex = 36
+        Me.tslblStatusAlt.Text = "No board connected"
+        '
+        'tsbtnRefresh
+        '
+        Me.tsbtnRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tsbtnRefresh.AutoSize = True
+        Me.tsbtnRefresh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.tsbtnRefresh.Depth = 0
+        Me.tsbtnRefresh.Icon = Nothing
+        Me.tsbtnRefresh.Location = New System.Drawing.Point(594, 561)
+        Me.tsbtnRefresh.Margin = New System.Windows.Forms.Padding(4, 6, 4, 6)
+        Me.tsbtnRefresh.MouseState = MaterialSkin.MouseState.HOVER
+        Me.tsbtnRefresh.Name = "tsbtnRefresh"
+        Me.tsbtnRefresh.Primary = False
+        Me.tsbtnRefresh.Size = New System.Drawing.Size(79, 36)
+        Me.tsbtnRefresh.TabIndex = 41
+        Me.tsbtnRefresh.Text = "Refresh"
+        Me.tsbtnRefresh.UseVisualStyleBackColor = True
+        '
+        'MaterialDivider2
+        '
+        Me.MaterialDivider2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.MaterialDivider2.BackColor = System.Drawing.Color.FromArgb(CType(CType(31, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.MaterialDivider2.Depth = 0
+        Me.MaterialDivider2.Location = New System.Drawing.Point(0, 561)
+        Me.MaterialDivider2.MouseState = MaterialSkin.MouseState.HOVER
+        Me.MaterialDivider2.Name = "MaterialDivider2"
+        Me.MaterialDivider2.Size = New System.Drawing.Size(960, 1)
+        Me.MaterialDivider2.TabIndex = 11
+        Me.MaterialDivider2.Text = "MaterialDivider2"
+        '
+        'ofdParam
+        '
+        Me.ofdParam.FileName = "OpenFileDialog1"
+        '
+        'txtClockAlt
+        '
+        Me.txtClockAlt.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtClockAlt.AutoSize = True
+        Me.txtClockAlt.BackColor = System.Drawing.Color.Transparent
+        Me.txtClockAlt.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtClockAlt.ForeColor = System.Drawing.SystemColors.HighlightText
+        Me.txtClockAlt.Location = New System.Drawing.Point(879, 30)
+        Me.txtClockAlt.Name = "txtClockAlt"
+        Me.txtClockAlt.Size = New System.Drawing.Size(83, 20)
+        Me.txtClockAlt.TabIndex = 42
+        Me.txtClockAlt.Text = "HH:mm:ss"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(842, 525)
+        Me.ClientSize = New System.Drawing.Size(960, 600)
+        Me.Controls.Add(Me.txtClockAlt)
+        Me.Controls.Add(Me.MaterialDivider2)
+        Me.Controls.Add(Me.tsbtnRefresh)
+        Me.Controls.Add(Me.tslblStatusAlt)
+        Me.Controls.Add(Me.tsbtnConnectionAlt)
+        Me.Controls.Add(Me.MaterialTabSelector1)
         Me.Controls.Add(Me.ToolStrip1)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.Controls.Add(Me.TabControl1)
-        Me.DoubleBuffered = True
-        Me.MainMenuStrip = Me.MenuStrip1
-        Me.MinimumSize = New System.Drawing.Size(800, 480)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(960, 600)
         Me.Name = "Form1"
+        Me.Padding = New System.Windows.Forms.Padding(5)
+        Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show
         Me.Text = "TAZPA Software"
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.tabMonitor.ResumeLayout(False)
         Me.gbParameter.ResumeLayout(False)
         Me.gbParameter.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
+        Me.ParamPanel.ResumeLayout(False)
+        Me.ParamPanel.PerformLayout()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         Me.gbGrafik.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.gbTerminal.ResumeLayout(False)
-        Me.gbTerminal.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
-    Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents HelpToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStrip1 As System.Windows.Forms.ToolStrip
     Friend WithEvents ToolStripLabel1 As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripLabel2 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents tscbbPort As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents ToolStripLabel3 As System.Windows.Forms.ToolStripLabel
     Friend WithEvents tscbbBaud As System.Windows.Forms.ToolStripComboBox
-    Friend WithEvents tsbtnConnection As System.Windows.Forms.ToolStripButton
-    Friend WithEvents tslblStatus As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents TabControl1 As TabControl
     Friend WithEvents tabMonitor As TabPage
     Friend WithEvents Timer1 As Timer
-    Friend WithEvents txtClock As ToolStripLabel
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents SerialPort1 As IO.Ports.SerialPort
-    Friend WithEvents rtbReceived As RichTextBox
-    Friend WithEvents btnSaveData As Button
-    Friend WithEvents Button1 As Button
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
-    Friend WithEvents Label2 As Label
     Friend WithEvents sfdData As SaveFileDialog
     Friend WithEvents gbParameter As GroupBox
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents btnParamEdit As Button
-    Friend WithEvents btnParamLoad As Button
-    Friend WithEvents btnParamSave As Button
-    Friend WithEvents btnParamSet As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Label3 As Label
     Friend WithEvents lblParam2 As Label
@@ -844,7 +938,28 @@ Partial Class Form1
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents gbGrafik As GroupBox
-    Friend WithEvents gbTerminal As GroupBox
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents ParamPanel As Panel
     Friend WithEvents Panel2 As Panel
+    Friend WithEvents lblNamaSampel As Label
+    Friend WithEvents tbNama As TextBox
+    Friend WithEvents TabControl1 As MaterialSkin.Controls.MaterialTabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents MaterialTabSelector1 As MaterialSkin.Controls.MaterialTabSelector
+    Friend WithEvents btnSaveData As MaterialSkin.Controls.MaterialRaisedButton
+    Friend WithEvents btnParamLoad As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents btnParamSave As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents btnParamSet As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents btnParamEdit As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents MaterialDivider1 As MaterialSkin.Controls.MaterialDivider
+    Friend WithEvents tsbtnConnectionAlt As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents tslblStatusAlt As MaterialSkin.Controls.MaterialLabel
+    Friend WithEvents MaterialListView1 As MaterialSkin.Controls.MaterialListView
+    Friend WithEvents ColumnHeader1 As ColumnHeader
+    Friend WithEvents ColumnHeader2 As ColumnHeader
+    Friend WithEvents ColumnHeader3 As ColumnHeader
+    Friend WithEvents tsbtnRefresh As MaterialSkin.Controls.MaterialFlatButton
+    Friend WithEvents MaterialDivider2 As MaterialSkin.Controls.MaterialDivider
+    Friend WithEvents sfdParam As SaveFileDialog
+    Friend WithEvents ofdParam As OpenFileDialog
+    Friend WithEvents txtClockAlt As Label
 End Class

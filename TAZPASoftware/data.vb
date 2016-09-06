@@ -8,6 +8,8 @@ Public Class data
     <FieldConverter(ConverterKind.Date, "HH:mm:ss")>
     Public dataX As DateTime
 
+    Public dataES As Double
+
     Public dataY As Double
 
 
