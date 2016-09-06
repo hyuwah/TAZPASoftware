@@ -3,7 +3,7 @@ TAZPA Software
 **TAZPA Software** is a software interface for TAZPA, a system to measure zeta potential of a colloidal sample. Part of my thesis on Universitas Padjadjaran.
 
 #### Screenshot
-![Screenshot software](http://url/screenshot-software.png "screenshot software")
+![Screenshot software](https://raw.githubusercontent.com/hyuwah/TAZPASoftware/master/assets/materialTAZPA.gif "software preview")
 
 ## Download
 * [Version X.Y](https://github.com/hyuwah/TAZPASoftware/archive/master.zip)
@@ -24,7 +24,7 @@ Minimum .NET Framework installed : 4.0
 * see [LICENSE](https://github.com/hyuwah/TAZPASoftware/blob/master/LICENSE.md) file
 
 ## Version 
-* Version X.Y
+* Version 1.1
 
 ## How-to use this code
 * see [INSTRUCTIONS](https://github.com/hyuwah/TAZPASoftware/blob/master/INSTRUCTIONS.md) file
