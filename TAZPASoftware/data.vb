@@ -1,7 +1,7 @@
 ﻿'-> Never forget:  Imports FileHelpers
 Imports FileHelpers
 
-<DelimitedRecord(","), IgnoreFirst(1)>
+<DelimitedRecord(";"), IgnoreFirst(1)>
 Public Class data
 
 

@@ -43,6 +43,8 @@ Partial Class Form1
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.gbParameter = New System.Windows.Forms.GroupBox()
+        Me.rbSmooth = New System.Windows.Forms.RadioButton()
+        Me.rbRaw = New System.Windows.Forms.RadioButton()
         Me.MaterialDivider1 = New MaterialSkin.Controls.MaterialDivider()
         Me.tbNama = New System.Windows.Forms.TextBox()
         Me.lblNamaSampel = New System.Windows.Forms.Label()
@@ -81,6 +83,7 @@ Partial Class Form1
         Me.btnSaveData = New MaterialSkin.Controls.MaterialRaisedButton()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.wbHelp = New System.Windows.Forms.WebBrowser()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SerialPort1 = New System.IO.Ports.SerialPort(Me.components)
         Me.sfdData = New System.Windows.Forms.SaveFileDialog()
@@ -101,6 +104,7 @@ Partial Class Form1
         Me.gbGrafik.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolStrip1
@@ -223,6 +227,8 @@ Partial Class Form1
         Me.gbParameter.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.gbParameter.BackColor = System.Drawing.Color.White
+        Me.gbParameter.Controls.Add(Me.rbSmooth)
+        Me.gbParameter.Controls.Add(Me.rbRaw)
         Me.gbParameter.Controls.Add(Me.MaterialDivider1)
         Me.gbParameter.Controls.Add(Me.tbNama)
         Me.gbParameter.Controls.Add(Me.lblNamaSampel)
@@ -236,6 +242,28 @@ Partial Class Form1
         Me.gbParameter.TabIndex = 43
         Me.gbParameter.TabStop = False
         Me.gbParameter.Text = "Parameter Pengukuran"
+        '
+        'rbSmooth
+        '
+        Me.rbSmooth.AutoSize = True
+        Me.rbSmooth.Location = New System.Drawing.Point(6, 391)
+        Me.rbSmooth.Name = "rbSmooth"
+        Me.rbSmooth.Size = New System.Drawing.Size(99, 17)
+        Me.rbSmooth.TabIndex = 12
+        Me.rbSmooth.TabStop = True
+        Me.rbSmooth.Text = "Smoothed Data"
+        Me.rbSmooth.UseVisualStyleBackColor = True
+        '
+        'rbRaw
+        '
+        Me.rbRaw.AutoSize = True
+        Me.rbRaw.Location = New System.Drawing.Point(6, 370)
+        Me.rbRaw.Name = "rbRaw"
+        Me.rbRaw.Size = New System.Drawing.Size(73, 17)
+        Me.rbRaw.TabIndex = 11
+        Me.rbRaw.TabStop = True
+        Me.rbRaw.Text = "Raw Data"
+        Me.rbRaw.UseVisualStyleBackColor = True
         '
         'MaterialDivider1
         '
@@ -756,12 +784,22 @@ Partial Class Form1
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.White
+        Me.TabPage1.Controls.Add(Me.wbHelp)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(942, 444)
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Help"
+        '
+        'wbHelp
+        '
+        Me.wbHelp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.wbHelp.Location = New System.Drawing.Point(3, 3)
+        Me.wbHelp.MinimumSize = New System.Drawing.Size(20, 20)
+        Me.wbHelp.Name = "wbHelp"
+        Me.wbHelp.Size = New System.Drawing.Size(936, 438)
+        Me.wbHelp.TabIndex = 0
         '
         'Timer1
         '
@@ -895,6 +933,7 @@ Partial Class Form1
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TabPage1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -962,4 +1001,7 @@ Partial Class Form1
     Friend WithEvents sfdParam As SaveFileDialog
     Friend WithEvents ofdParam As OpenFileDialog
     Friend WithEvents txtClockAlt As Label
+    Friend WithEvents rbSmooth As RadioButton
+    Friend WithEvents rbRaw As RadioButton
+    Friend WithEvents wbHelp As WebBrowser
 End Class

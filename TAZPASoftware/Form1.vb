@@ -77,6 +77,11 @@ Public Class Form1 : Inherits MaterialForm
     Dim varZP As Double
     Dim varSP As Double
 
+    ' MCU control toggle
+    Dim toggleSmooth As Char
+
+    Dim appPath As String
+
     '' [[ FORM SETTING ]]
     ' Form LOAD
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -95,10 +100,15 @@ Public Class Form1 : Inherits MaterialForm
         tscbbBaud.Items.Add(38400)
         tscbbBaud.Items.Add(57600)
         tscbbBaud.Items.Add(115200)
-        For i = 0 To UBound(myPort)
-            tscbbPort.Items.Add(myPort(i))
-        Next
-        tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+
+        Try
+            For i = 0 To UBound(myPort)
+                tscbbPort.Items.Add(myPort(i))
+            Next
+            tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+        Catch ex As Exception
+            MessageBox.Show("Tak ada port serial yang terdeteksi")
+        End Try
         tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text to the first Baud rate on the list
 
         ' Parameter prep
@@ -129,6 +139,10 @@ Public Class Form1 : Inherits MaterialForm
         'disable save data button
         btnSaveData.Enabled = False
 
+        '' [[ HELP Browser ]]
+        appPath = Application.StartupPath
+        Console.WriteLine(appPath)
+        wbHelp.Navigate(appPath & ".\help.html")
 
     End Sub
 
@@ -193,6 +207,8 @@ Public Class Form1 : Inherits MaterialForm
 
                 valXStart = Now   'Start time
 
+                SerialPort1.Write(toggleSmooth)
+
             Catch ex As Exception
 
                 MsgBox("Can't connect to " + tscbbPort.Text + vbNewLine + "Please try again.", MsgBoxStyle.Exclamation, "Port is busy")
@@ -212,10 +228,14 @@ Public Class Form1 : Inherits MaterialForm
         ' Serial Prep
         myPort = SerialPort.GetPortNames() 'Get all com ports available
         tscbbPort.Items.Clear()
-        For i = 0 To UBound(myPort)
-            tscbbPort.Items.Add(myPort(i))
-        Next
-        tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+        Try
+            For i = 0 To UBound(myPort)
+                tscbbPort.Items.Add(myPort(i))
+            Next
+            tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+        Catch ex As Exception
+            MessageBox.Show("Tak ada port serial yang terdeteksi")
+        End Try
         tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text to the first Baud rate on the list
     End Sub
 
@@ -227,7 +247,12 @@ Public Class Form1 : Inherits MaterialForm
 
     Private Sub ReceivedText(ByVal text As String)
         Console.WriteLine(text)
-        serdata = Convert.ToDouble(text)
+        Try
+            serdata = Convert.ToDouble(text)
+        Catch err As Exception
+            Exit Sub
+        End Try
+
 
         valXDur = Now.Subtract(valXStart)
         valX = Date.Parse(Convert.ToString(valXDur))
@@ -314,7 +339,7 @@ Public Class Form1 : Inherits MaterialForm
     '' [[ CSV DATA PROCESS ]]
     ' Write to CSV
     Sub writedata(ByVal filename As String)
-        engine.HeaderText = """Waktu"",""Es(mV)"",""ZP(mV)"""
+        engine.HeaderText = """Waktu"";""Es(mV)"";""ZP(mV)"""
         engine.GetFileHeader()
         'write the file
         engine.WriteFile(filename, arrData)
@@ -353,7 +378,7 @@ Public Class Form1 : Inherits MaterialForm
             Using reader As StreamReader = File.OpenText(sfdData.FileName)
                 content = reader.ReadToEnd
             End Using
-            mytext = "Timestamp," & Date.Today & vbCrLf & "Sampel," & paramNama & vbCrLf & content
+            mytext = "sep=;" & vbCrLf & "Timestamp;" & Date.Today & vbCrLf & "Sampel;" & paramNama & vbCrLf & content
             Using writer As New StreamWriter(sfdData.FileName) 'True for append mode
                 writer.Write(mytext)
             End Using
@@ -448,7 +473,7 @@ Public Class Form1 : Inherits MaterialForm
 
     ' Write to CSV
     Sub writeparam(ByVal filename As String)
-        engineParam.HeaderText = """Nama"",""JE"",""FVP"",""PB"",""DP"",""DM"",""G"",""V"",""KB"""
+        engineParam.HeaderText = """Nama"";""JE"";""FVP"";""PB"";""DP"";""DM"";""G"";""V"";""KB"""
         engineParam.GetFileHeader()
         arrParam.Add(New param() With {
                      .param_nama = tbNama.Text,
@@ -499,5 +524,34 @@ Public Class Form1 : Inherits MaterialForm
             MessageBox.Show("Parameter Loaded")
         End If
     End Sub
+
+    '' [[ MCU Control ]]
+    'Smoothing Data
+    Private Sub rbRaw_CheckedChanged(sender As Object, e As EventArgs) Handles rbRaw.CheckedChanged
+        toggleSmooth = "1"
+    End Sub
+
+    Private Sub rbSmooth_CheckedChanged(sender As Object, e As EventArgs) Handles rbSmooth.CheckedChanged
+        toggleSmooth = "2"
+    End Sub
+
+    '' [[ HELP Browser ]]
+    Private Sub Form1_Leave(sender As Object, e As EventArgs) Handles Me.FormClosing
+        OpenAllInBrowser = False   ' This is to reset the variable to False, because
+    End Sub                        ' sometimes closing the form doesn't reset the variables.
+
+    Private Sub wbHelp_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles wbHelp.DocumentCompleted
+        OpenAllInBrowser = True
+    End Sub
+
+    Private OpenAllInBrowser As Boolean = False
+
+    Private Sub wbHelp_Navigating(ByVal sender As Object, ByVal e As WebBrowserNavigatingEventArgs) Handles wbHelp.Navigating
+        If OpenAllInBrowser Then
+            Process.Start(e.Url.ToString())
+            e.Cancel = True
+        End If
+    End Sub
+
 
 End Class
