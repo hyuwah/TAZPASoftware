@@ -1,4 +1,8 @@
-﻿'-> Never forget:  Imports FileHelpers
+﻿''' Data.vb
+''' Specifies filehelpers setting for data used in form1.vb
+''' Structure for data saved by software
+
+'-> Never forget:  Imports FileHelpers
 Imports FileHelpers
 
 <DelimitedRecord(";"), IgnoreFirst(1)>
@@ -10,7 +14,7 @@ Public Class data
 
     Public dataES As Double
 
-    Public dataY As Double
+    Public dataEZ As Double
 
 
 End Class

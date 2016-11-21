@@ -18,35 +18,23 @@
 'along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-'' [[ TODO ]]
-'' Parameter
-''     Nama sampel, tgl?
-''     Set, Edit, Save, Load
-'' Validasi Parameter sebelum konek port
-''     bisa konek kalo udah set, kalo udah set belum konek bisa edit
-
-
-'' Alur:    1. Set Parameter
-''          2. COM
-''          3. monitor (grah + terminal)
-
 '' [[ Library ]]
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.IO
-Imports FileHelpers
+Imports FileHelpers             'Nuget FileHelpers
 Imports System.IO.Ports
-Imports MaterialSkin
-Imports MaterialSkin.Controls
+Imports MaterialSkin            'Nuget MaterialSkin
+Imports MaterialSkin.Controls   'Nuget MaterialSkin
 
 Public Class Form1 : Inherits MaterialForm
 
     '' [[ DEKLARASI VARIABEL ]]
 
-    ' Filehelpers
-    Private engine As New FileHelperEngine(GetType(data))
-    Private engineParam As New FileHelperEngine(GetType(param))
+    ' Deklarasi Engine Filehelpers
+    Private engine As New FileHelperEngine(GetType(data))           ' Engine data pengukuran
+    Private engineParam As New FileHelperEngine(GetType(param))     ' Engine parameter pengukuran
 
-    'Create a list of objects to persist
+    'List object untuk data dan parameter
     Private arrData As New List(Of data)
     Private arrParam As New List(Of param)
 
@@ -59,8 +47,8 @@ Public Class Form1 : Inherits MaterialForm
     Private constEQ As Double = 0
 
     Dim myPort As Array
-    Delegate Sub ReceivedTextDelegate(ByVal text As String) 'Added to prevent threading errors during receiveing of data
-    Delegate Sub ReceivedDoubleDelegate(ByVal valY As Double) 'Added to prevent threading errors during receiveing of data
+    Delegate Sub ReceivedTextDelegate(ByVal text As String) 'Prevent threading errors during receiveing of data
+    Delegate Sub ReceivedDoubleDelegate(ByVal valY As Double) 'Prevent threading errors during receiveing of data
 
     ' Variabel Parameter
     Dim paramNama As String
@@ -72,10 +60,11 @@ Public Class Form1 : Inherits MaterialForm
     Dim paramPG As Double
     Dim paramV As Double
     Dim paramKB As Double
+    Dim paramPV As Double = 0.00000000000885434 ' Permitivitas Vakum
 
     ' Variabel hasil
-    Dim varZP As Double
-    Dim varSP As Double
+    Dim varEZ As Double
+    Dim varES As Double
 
     ' MCU control toggle
     Dim toggleSmooth As Char
@@ -92,22 +81,22 @@ Public Class Form1 : Inherits MaterialForm
 
         UpdateToolStrip()
 
-
         ' Serial Prep
         myPort = SerialPort.GetPortNames() 'Get all com ports available
         tscbbBaud.Items.Add(9600)     'Populate the tscbbBaud Combo box to common baud rates used
-        tscbbBaud.Items.Add(19200)
-        tscbbBaud.Items.Add(38400)
-        tscbbBaud.Items.Add(57600)
-        tscbbBaud.Items.Add(115200)
+        'tscbbBaud.Items.Add(19200)
+        'tscbbBaud.Items.Add(38400)
+        'tscbbBaud.Items.Add(57600)
+        'tscbbBaud.Items.Add(115200)
 
+        ' Mempopulasi port COM yang terdeteksi
         Try
             For i = 0 To UBound(myPort)
                 tscbbPort.Items.Add(myPort(i))
             Next
             tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
         Catch ex As Exception
-            MessageBox.Show("Tak ada port serial yang terdeteksi")
+            MsgBox("Tak ada port serial yang terdeteksi", MsgBoxStyle.Exclamation)
         End Try
         tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text to the first Baud rate on the list
 
@@ -116,23 +105,14 @@ Public Class Form1 : Inherits MaterialForm
         btnParamSave.Enabled = False
         tsbtnConnectionAlt.Enabled = False
 
-        'Contoh Param Soal
-        '        tbDM.Text = 998.2
-        '       tbDP.Text = 2600
-        '      tbFVP.Text = 0.1
-        '     tbJE.Text = 0.1
-        '    tbKB.Text = 0.127
-        '   tbPB.Text = 0.0000000007100908
-        '  tbPG.Text = 9.81
-        ' tbV.Text = 0.001
-
         'Contoh Param Air
+        tbNama.Text = "Air"
         tbDM.Text = 1
         tbDP.Text = 1.01
-        tbFVP.Text = 1
+        tbFVP.Text = 100
         tbJE.Text = 0.02
         tbKB.Text = 0.025
-        tbPB.Text = 1
+        tbPB.Text = 80.1
         tbPG.Text = 9.81
         tbV.Text = 0.00089
 
@@ -142,7 +122,7 @@ Public Class Form1 : Inherits MaterialForm
         '' [[ HELP Browser ]]
         appPath = Application.StartupPath
         Console.WriteLine(appPath)
-        wbHelp.Navigate(appPath & ".\help.html")
+        wbHelp.Navigate(appPath & ".\help.html") ' Load file help.html
 
     End Sub
 
@@ -190,6 +170,7 @@ Public Class Form1 : Inherits MaterialForm
     '' [[ SERIAL COM ]]
     ' COM BUTTON
     Private Sub tsbtnConnectionAlt_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tsbtnConnectionAlt.Click
+        'Connect Clicked
         If tsbtnConnectionAlt.Text = "Connect" Then
             SerialPort1.PortName = tscbbPort.Text         'Set SerialPort1 to the selected COM port at startup
             SerialPort1.BaudRate = tscbbBaud.Text         'Set Baud rate to the selected value on
@@ -197,27 +178,30 @@ Public Class Form1 : Inherits MaterialForm
             'Other Serial Port Property
             SerialPort1.Parity = Parity.None
             SerialPort1.StopBits = StopBits.One
-            SerialPort1.DataBits = 8            'Open our serial port
+            SerialPort1.DataBits = 8                            'Open our serial port
             SerialPort1.Encoding = System.Text.Encoding.Default 'very important!
             Try
+                arrData.Clear()
                 SerialPort1.Open()
-                Chart1.Series("Potensial Zeta").Points.Clear() ' clear grafik
+                Chart1.Series("Potensial Zeta").Points.Clear() 'Clear grafik
 
                 MaterialListView1.Items.Clear() 'Clear ListView
 
                 valXStart = Now   'Start time
 
-                SerialPort1.Write(toggleSmooth)
+                SerialPort1.Write(toggleSmooth) 'Receive Command
 
             Catch ex As Exception
 
-                MsgBox("Can't connect to " + tscbbPort.Text + vbNewLine + "Please try again.", MsgBoxStyle.Exclamation, "Port is busy")
+                MsgBox("Tak bisa terhubung ke " + tscbbPort.Text + vbNewLine + "Silahkan coba lagi.", MsgBoxStyle.Exclamation, "Port sedang sibuk")
                 SerialPort1.Close()
                 Exit Sub
             End Try
 
             UpdateToolStrip()
         Else
+            'Disconnect Clicked
+            SerialPort1.Write("0") 'Stop Command
             SerialPort1.Close()
             UpdateToolStrip()
         End If
@@ -241,7 +225,12 @@ Public Class Form1 : Inherits MaterialForm
 
     ' Terima data serial
     Private Sub SerialPort1_DataReceived(ByVal sender As Object, ByVal e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
-        ReceivedText(SerialPort1.ReadLine())    'Automatically called every time a data is received at the serialPort
+        Try
+            ReceivedText(SerialPort1.ReadLine()) 'Automatically called every time a data is received at the serialPort
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
 
     End Sub
 
@@ -258,15 +247,15 @@ Public Class Form1 : Inherits MaterialForm
         valX = Date.Parse(Convert.ToString(valXDur))
         'valY = constEQ / serdata
         valY = serdata
-        varSP = valY 'Sedimentasi Potensial ES
+        varES = valY 'Sedimentasi Potensial ES
 
         If Not Double.IsInfinity(constEQ / valY) Then 'skip kalo div by zero
-            arrData.Add(New data() With {.dataX = valX, .dataES = varSP, .dataY = (constEQ / valY)})
+            arrData.Add(New data() With {.dataX = valX, .dataES = varES, .dataEZ = (constEQ / valY)})
 
             ' Isi listview
             If Me.MaterialListView1.InvokeRequired Then
             Else
-                Dim listData = New ListViewItem({valX.ToString("HH:mm:ss"), String.Format("{0:N2}", varSP), String.Format("{0:N5}", constEQ / valY)})
+                Dim listData = New ListViewItem({valX.ToString("HH:mm:ss"), String.Format("{0:N2}", varES), String.Format("{0:N5}", constEQ / valY)})
                 MaterialListView1.Items.Add(listData)
 
                 listData.EnsureVisible()
@@ -339,7 +328,7 @@ Public Class Form1 : Inherits MaterialForm
     '' [[ CSV DATA PROCESS ]]
     ' Write to CSV
     Sub writedata(ByVal filename As String)
-        engine.HeaderText = """Waktu"";""Es(mV)"";""ZP(mV)"""
+        engine.HeaderText = """Waktu"";""Es(mV)"";""Ez(mV)"""
         engine.GetFileHeader()
         'write the file
         engine.WriteFile(filename, arrData)
@@ -350,7 +339,7 @@ Public Class Form1 : Inherits MaterialForm
     Sub readdata(ByVal filename As String)
         Dim dataRead = CType(CommonEngine.ReadFile(GetType(data), filename), data())
         For Each dat As data In dataRead
-            Console.WriteLine(dat.dataX.ToString("HH:mm:ss") & " | " & dat.dataES & " | " & dat.dataY)
+            Console.WriteLine(dat.dataX.ToString("HH:mm:ss") & " | " & dat.dataES & " | " & dat.dataEZ)
         Next
 
         'MessageBox.Show("Console Read Done")
@@ -367,7 +356,7 @@ Public Class Form1 : Inherits MaterialForm
       Then
             writedata(sfdData.FileName)
             Console.WriteLine("File : " & sfdData.FileName)
-            Console.WriteLine("Waktu | Es (mV) | ZP (mV)")
+            Console.WriteLine("Waktu | Es (mV) | Ez (mV)")
             readdata(sfdData.FileName)
             Console.WriteLine("-----------------------------")
 
@@ -401,6 +390,17 @@ Public Class Form1 : Inherits MaterialForm
             paramPG = Convert.ToDouble(tbPG.Text)
             paramV = Convert.ToDouble(tbV.Text)
             paramNama = tbNama.Text
+
+            'Permitivitas Bahan Relatif to Permitivitas Bahan
+            paramPB = paramPB * paramPV
+
+            ' konversi satuan densitas
+            paramDM = paramDM * 1000
+            paramDP = paramDP * 1000
+
+            'konversi wt%
+            paramFVP = paramFVP / 100
+
         Catch ex As Exception
             MsgBox("Isi semua parameter dengan angka")
         End Try
@@ -441,6 +441,9 @@ Public Class Form1 : Inherits MaterialForm
             Next
             tbNama.Enabled = False
 
+            rbRaw.Enabled = False
+            rbSmooth.Enabled = False
+
         Catch ex As Exception
             MsgBox("Pastikan parameter berformat angka desimal")
         End Try
@@ -469,6 +472,9 @@ Public Class Form1 : Inherits MaterialForm
         Next
         tbNama.Enabled = True
 
+        rbRaw.Enabled = True
+        rbSmooth.Enabled = True
+
     End Sub
 
     ' Write to CSV
@@ -494,7 +500,8 @@ Public Class Form1 : Inherits MaterialForm
         Dim dataRead = CType(CommonEngine.ReadFile(GetType(param), filename), param())
         For Each dat As param In dataRead
             tbNama.Text = dat.param_nama
-            tbDM.Text = dat.param_JE
+            tbDM.Text = dat.param_DM
+
             tbDP.Text = dat.param_DP
             tbFVP.Text = dat.param_FVP
             tbJE.Text = dat.param_JE
@@ -535,17 +542,14 @@ Public Class Form1 : Inherits MaterialForm
         toggleSmooth = "2"
     End Sub
 
-    '' [[ HELP Browser ]]
-    Private Sub Form1_Leave(sender As Object, e As EventArgs) Handles Me.FormClosing
-        OpenAllInBrowser = False   ' This is to reset the variable to False, because
-    End Sub                        ' sometimes closing the form doesn't reset the variables.
-
+    '' [[ HELP BROWSER ]]
     Private Sub wbHelp_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles wbHelp.DocumentCompleted
         OpenAllInBrowser = True
     End Sub
 
     Private OpenAllInBrowser As Boolean = False
 
+    ' Cancel nagvigation in internal web browser component, redirect it to default system web browser
     Private Sub wbHelp_Navigating(ByVal sender As Object, ByVal e As WebBrowserNavigatingEventArgs) Handles wbHelp.Navigating
         If OpenAllInBrowser Then
             Process.Start(e.Url.ToString())
@@ -553,5 +557,15 @@ Public Class Form1 : Inherits MaterialForm
         End If
     End Sub
 
+    '' [[ FORM CLOSE ]]
+    Private Sub Form1_Leave(sender As Object, e As EventArgs) Handles Me.FormClosing
+        OpenAllInBrowser = False   ' This is to reset the variable to False, because
+        ' sometimes closing the form doesn't reset the variables.
 
+        ' Serial reset
+        If SerialPort1.IsOpen = True Then
+            SerialPort1.Write("0")
+            SerialPort1.Close()
+        End If
+    End Sub
 End Class
