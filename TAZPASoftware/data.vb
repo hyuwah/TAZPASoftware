@@ -1,7 +1,6 @@
-﻿''' Data.vb
-''' Specifies filehelpers setting for data used in form1.vb
-''' Structure for data saved by software
-
+﻿' Data.vb
+' Specifies filehelpers setting for data used in form1.vb
+' Structure for data saved by software
 '-> Never forget:  Imports FileHelpers
 Imports FileHelpers
 
@@ -9,7 +8,7 @@ Imports FileHelpers
 Public Class data
 
 
-    <FieldConverter(ConverterKind.Date, "HH:mm:ss")>
+    <FieldConverter(ConverterKind.Date, "mm:ss.ff")>
     Public dataX As DateTime
 
     Public dataES As Double

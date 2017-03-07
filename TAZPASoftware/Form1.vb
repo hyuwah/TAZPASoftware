@@ -2,7 +2,7 @@
 ' TAZPA Software
 ' Program untuk interface dengan TAZPA
 ' Copyright (c) 2016 Muhammad Wahyudin. All rights reserved
-' http://www.hyuwah.me/skripsi
+' http://hyuwah.github.io/TAZPASoftware
 
 'This program is free software: you can redistribute it and/or modify
 'it under the terms of the GNU General Public License as published by
@@ -21,10 +21,13 @@
 '' [[ Library ]]
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.IO
-Imports FileHelpers             'Nuget FileHelpers
 Imports System.IO.Ports
-Imports MaterialSkin            'Nuget MaterialSkin
-Imports MaterialSkin.Controls   'Nuget MaterialSkin
+Imports FileHelpers                 'Nuget FileHelpers
+Imports MaterialSkin                'Nuget MaterialSkin
+Imports MaterialSkin.Controls       'Nuget MaterialSkin
+Imports LiveCharts                  'Nuget LiveCharts
+Imports LiveCharts.Wpf              'Nuget LiveCharts
+Imports LiveCharts.Configurations   'Nuget LiveCharts
 
 Public Class Form1 : Inherits MaterialForm
 
@@ -47,8 +50,8 @@ Public Class Form1 : Inherits MaterialForm
     Private constEQ As Double = 0
 
     Dim myPort As Array
-    Delegate Sub ReceivedTextDelegate(ByVal text As String) 'Prevent threading errors during receiveing of data
-    Delegate Sub ReceivedDoubleDelegate(ByVal valY As Double) 'Prevent threading errors during receiveing of data
+    Delegate Sub ReceivedTextDelegate(ByVal text As String) 'Mencegah threading errors saat menerima data
+    Delegate Sub ReceivedDoubleDelegate(ByVal valY As Double) 'Mencegah threading errors saat menerima of data
 
     ' Variabel Parameter
     Dim paramNama As String
@@ -71,6 +74,21 @@ Public Class Form1 : Inherits MaterialForm
 
     Dim appPath As String
 
+    'LIVECHARTS
+    Dim dayConfig = Mappers.Xy(Of MeasureModel)().X(Function(dayModel) dayModel.DateTime.Ticks).Y(Function(dayModel) dayModel.Value)
+    Dim seriCollection = New LiveCharts.SeriesCollection(dayConfig)
+
+    ' Dummy data ketika form load
+    Dim introSeries = New LineSeries() With {
+    .Title = "Potensial Zeta",
+    .Values = New ChartValues(Of MeasureModel) From {
+    New MeasureModel() With {.DateTime = "00:00", .Value = 1},
+    New MeasureModel() With {.DateTime = "00:01", .Value = 3},
+    New MeasureModel() With {.DateTime = "00:02", .Value = 3},
+    New MeasureModel() With {.DateTime = "00:03", .Value = 5}
+    }}
+
+
     '' [[ FORM SETTING ]]
     ' Form LOAD
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -82,23 +100,19 @@ Public Class Form1 : Inherits MaterialForm
         UpdateToolStrip()
 
         ' Serial Prep
-        myPort = SerialPort.GetPortNames() 'Get all com ports available
-        tscbbBaud.Items.Add(9600)     'Populate the tscbbBaud Combo box to common baud rates used
-        'tscbbBaud.Items.Add(19200)
-        'tscbbBaud.Items.Add(38400)
-        'tscbbBaud.Items.Add(57600)
-        'tscbbBaud.Items.Add(115200)
+        myPort = SerialPort.GetPortNames() 'Mendeteksi COM Port
+        tscbbBaud.Items.Add(9600)     'mengisi baud rate di tscbbBaud Combo box
 
-        ' Mempopulasi port COM yang terdeteksi
+        ' Mengisi port COM yang terdeteksi di tscbbPort
         Try
             For i = 0 To UBound(myPort)
                 tscbbPort.Items.Add(myPort(i))
             Next
-            tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+            tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text ke port COM yang terdeteksi pertamakali
         Catch ex As Exception
             MsgBox("Tak ada port serial yang terdeteksi", MsgBoxStyle.Exclamation)
         End Try
-        tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text to the first Baud rate on the list
+        tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text ke baud rate pertama di daftar
 
         ' Parameter prep
         btnParamEdit.Enabled = False
@@ -124,7 +138,29 @@ Public Class Form1 : Inherits MaterialForm
         Console.WriteLine(appPath)
         wbHelp.Navigate(appPath & ".\help.html") ' Load file help.html
 
+
+        '' [[ LiveCharts Settings ]]
+        seriCollection.Add(introSeries)
+
+        liveChart1.Series = seriCollection
+        liveChart1.LegendLocation = LegendLocation.Top
+        liveChart1.AxisY.Clear()
+        liveChart1.AxisX.Clear()
+
+        liveChart1.AxisY.Add(New Wpf.Axis() With {
+                             .Title = "Ez (mV)",
+                             .Foreground = New Windows.Media.SolidColorBrush(Windows.Media.Color.FromRgb(10, 10, 10))
+                             })
+        liveChart1.AxisX.Add(New Wpf.Axis() With {
+                             .Title = "Waktu",
+                             .DisableAnimations = False,
+                             .LabelFormatter = Function(value) New DateTime(CLng(value)).ToString("mm:ss"),
+                             .Foreground = New Windows.Media.SolidColorBrush(Windows.Media.Color.FromRgb(10, 10, 10))
+                             })
+
+
     End Sub
+
 
     ' Toolstrip connect update
     Public Sub UpdateToolStrip()
@@ -152,7 +188,7 @@ Public Class Form1 : Inherits MaterialForm
             btnParamEdit.Enabled = False
             btnSaveData.Enabled = True
         Else
-            ' Initial
+            ' Form load
             tsbtnConnectionAlt.Enabled = False
             tsbtnConnectionAlt.Text = "Connect"
             tslblStatusAlt.Text = "No board connected"
@@ -172,36 +208,31 @@ Public Class Form1 : Inherits MaterialForm
     Private Sub tsbtnConnectionAlt_Click(ByVal sender As Object, ByVal e As EventArgs) Handles tsbtnConnectionAlt.Click
         'Connect Clicked
         If tsbtnConnectionAlt.Text = "Connect" Then
-            SerialPort1.PortName = tscbbPort.Text         'Set SerialPort1 to the selected COM port at startup
-            SerialPort1.BaudRate = tscbbBaud.Text         'Set Baud rate to the selected value on
+            SerialPort1.PortName = tscbbPort.Text         'Set SerialPort1 ke COM port yang dipilih
+            SerialPort1.BaudRate = tscbbBaud.Text         'Set Baud rate yang dipilih
 
             'Other Serial Port Property
             SerialPort1.Parity = Parity.None
             SerialPort1.StopBits = StopBits.One
-            SerialPort1.DataBits = 8                            'Open our serial port
-            SerialPort1.Encoding = System.Text.Encoding.Default 'very important!
+            SerialPort1.DataBits = 8
+            SerialPort1.Encoding = System.Text.Encoding.Default
             Try
-                arrData.Clear()
-                SerialPort1.Open()
-                Chart1.Series("Potensial Zeta").Points.Clear() 'Clear grafik
-
+                arrData.Clear() ' Clear arrayData
+                SerialPort1.Open()  ' Buka Com
+                Chart1.Series(0).Points.Clear() 'Clear grafik system
+                liveChart1.Series(0).Values.Clear() 'Clear LiveCharts
                 MaterialListView1.Items.Clear() 'Clear ListView
-
                 valXStart = Now   'Start time
-
-                SerialPort1.Write(toggleSmooth) 'Receive Command
-
+                SerialPort1.Write(toggleSmooth) 'Kirim Mode Command (Default Smooth)
             Catch ex As Exception
-
                 MsgBox("Tak bisa terhubung ke " + tscbbPort.Text + vbNewLine + "Silahkan coba lagi.", MsgBoxStyle.Exclamation, "Port sedang sibuk")
                 SerialPort1.Close()
                 Exit Sub
             End Try
-
             UpdateToolStrip()
         Else
             'Disconnect Clicked
-            SerialPort1.Write("0") 'Stop Command
+            SerialPort1.Write("0") 'Kirim Stop Command (Standby Mode)
             SerialPort1.Close()
             UpdateToolStrip()
         End If
@@ -210,23 +241,25 @@ Public Class Form1 : Inherits MaterialForm
     'Refresh Com Port
     Private Sub tsbtnRefresh_Click(sender As Object, e As EventArgs) Handles tsbtnRefresh.Click
         ' Serial Prep
-        myPort = SerialPort.GetPortNames() 'Get all com ports available
+        myPort = SerialPort.GetPortNames() 'Ambil com port yang tersedia
         tscbbPort.Items.Clear()
         Try
             For i = 0 To UBound(myPort)
                 tscbbPort.Items.Add(myPort(i))
             Next
-            tscbbPort.Text = tscbbPort.Items.Item(0)    'Set tscbbPort text to the first COM port detected
+            tscbbPort.Text = tscbbPort.Items.Item(0)
         Catch ex As Exception
             MessageBox.Show("Tak ada port serial yang terdeteksi")
         End Try
-        tscbbBaud.Text = tscbbBaud.Items.Item(0)    'Set tscbbBaud text to the first Baud rate on the list
+        tscbbBaud.Text = tscbbBaud.Items.Item(0)
+
+
     End Sub
 
-    ' Terima data serial
+    ' Listen data yang diterima
     Private Sub SerialPort1_DataReceived(ByVal sender As Object, ByVal e As SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
         Try
-            ReceivedText(SerialPort1.ReadLine()) 'Automatically called every time a data is received at the serialPort
+            ReceivedText(SerialPort1.ReadLine()) 'Panggil rutin ReceivedText kalau ada "line" data masuk
         Catch ex As Exception
             Exit Sub
         End Try
@@ -234,57 +267,73 @@ Public Class Form1 : Inherits MaterialForm
 
     End Sub
 
+    ' Rutin ReceivedText / Terima Data
     Private Sub ReceivedText(ByVal text As String)
         Console.WriteLine(text)
         Try
-            serdata = Convert.ToDouble(text)
+            serdata = Convert.ToDouble(text) ' konversi string data ke double
         Catch err As Exception
             Exit Sub
         End Try
 
-
-        valXDur = Now.Subtract(valXStart)
-        valX = Date.Parse(Convert.ToString(valXDur))
-        'valY = constEQ / serdata
-        valY = serdata
+        valXDur = Now.Subtract(valXStart) ' Durasi waktu berjalan
+        valX = Date.Parse(Convert.ToString(valXDur)) ' stopwatch
+        valY = serdata  ' Data serial
         varES = valY 'Sedimentasi Potensial ES
 
         If Not Double.IsInfinity(constEQ / valY) Then 'skip kalo div by zero
+            'Tambah ke arrData
             arrData.Add(New data() With {.dataX = valX, .dataES = varES, .dataEZ = (constEQ / valY)})
 
             ' Isi listview
             If Me.MaterialListView1.InvokeRequired Then
             Else
-                Dim listData = New ListViewItem({valX.ToString("HH:mm:ss"), String.Format("{0:N2}", varES), String.Format("{0:N5}", constEQ / valY)})
+                Dim listData = New ListViewItem({
+                                                valX.ToString("mm:ss.ff"),
+                                                String.Format("{0:N2}", varES),
+                                                String.Format("{0:N5}", constEQ / valY)
+                                                })
                 MaterialListView1.Items.Add(listData)
 
                 listData.EnsureVisible()
                 listData = Nothing
             End If
 
+            ' Gambar grafik
             If Chart1.InvokeRequired Then
                 Dim d As New ReceivedDoubleDelegate(AddressOf ReceivedText)
                 BeginInvoke(d, New Object() {valY})
             Else
+                'Livechart
+                liveChart1.Series(0).Values.Add(New MeasureModel() With {.DateTime = valX, .Value = constEQ / valY})
+
+                'Hanya tampilkan 60 data terkini
+                If liveChart1.Series(0).Values.Count > 60 Then
+                    liveChart1.Series(0).Values.RemoveAt(0)
+                End If
+
+                'grafik system
                 Chart1.Series("Potensial Zeta").Points.AddXY(valX, constEQ / valY)
+
             End If
+
         End If
 
     End Sub
 
 
-    '' [[ GRAFIK ]]
-    ' Settingan Grafik
+    '' [[ GRAFIK System]]
+    ' Settingan Grafik System
     Private Sub Graph_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         Chart1.Series(0).XValueType = ChartValueType.Time
         With Chart1.ChartAreas(0)
-            .AxisX.LabelStyle.Format = "HH:mm:ss"
+            .AxisX.LabelStyle.Format = "mm:ss"
             .AxisX.ScaleView.Zoomable = True
-            '.AxisY.ScaleView.Zoomable = True
+            .AxisY.ScaleView.Zoomable = True
             .CursorX.IsUserSelectionEnabled = True
-            '.CursorY.IsUserSelectionEnabled = True
+            .CursorY.IsUserSelectionEnabled = True
             .CursorX.AutoScroll = True
-            '.CursorY.AutoScroll = True
+            .CursorY.AutoScroll = True
             .CursorX.IsUserEnabled = True
             .CursorX.IntervalType = DateTimeIntervalType.Seconds
             .CursorX.Interval = 1D
@@ -307,12 +356,12 @@ Public Class Form1 : Inherits MaterialForm
             point.MarkerColor = Color.Empty
         Next
 
-        ' If the mouse if over a data point
+        ' Mouse hover ke titik data
         If result.ChartElementType = ChartElementType.DataPoint Then
-            ' Find selected data point
+            ' tampilkan nilai data yang dipilih
             Dim pointInt As DataPoint = Chart1.Series(0).Points(result.PointIndex)
 
-            ' Change the appearance of the data point
+            ' tampilan titik data
             pointInt.BackSecondaryColor = Color.White
             pointInt.BackHatchStyle = ChartHatchStyle.Percent25
             pointInt.MarkerSize = 10
@@ -342,7 +391,6 @@ Public Class Form1 : Inherits MaterialForm
             Console.WriteLine(dat.dataX.ToString("HH:mm:ss") & " | " & dat.dataES & " | " & dat.dataEZ)
         Next
 
-        'MessageBox.Show("Console Read Done")
     End Sub
 
     ' Save File
@@ -379,7 +427,7 @@ Public Class Form1 : Inherits MaterialForm
     ' Set Button
     Private Sub btnParamSet_Click(sender As Object, e As EventArgs) Handles btnParamSet.Click
 
-        ' Need textbox validation (Double not null)
+        ' textbox validation pastikan 0 bukan null
         Try
             paramDM = Convert.ToDouble(tbDM.Text)
             paramDP = Convert.ToDouble(tbDP.Text)
@@ -533,11 +581,11 @@ Public Class Form1 : Inherits MaterialForm
     End Sub
 
     '' [[ MCU Control ]]
-    'Smoothing Data
+    'Mode Raw
     Private Sub rbRaw_CheckedChanged(sender As Object, e As EventArgs) Handles rbRaw.CheckedChanged
         toggleSmooth = "1"
     End Sub
-
+    'Mode EMA Smooth
     Private Sub rbSmooth_CheckedChanged(sender As Object, e As EventArgs) Handles rbSmooth.CheckedChanged
         toggleSmooth = "2"
     End Sub
@@ -549,7 +597,7 @@ Public Class Form1 : Inherits MaterialForm
 
     Private OpenAllInBrowser As Boolean = False
 
-    ' Cancel nagvigation in internal web browser component, redirect it to default system web browser
+    ' Batalkan navigasi didalam komponen browser internal, redirect ke default system web browser
     Private Sub wbHelp_Navigating(ByVal sender As Object, ByVal e As WebBrowserNavigatingEventArgs) Handles wbHelp.Navigating
         If OpenAllInBrowser Then
             Process.Start(e.Url.ToString())
@@ -559,8 +607,7 @@ Public Class Form1 : Inherits MaterialForm
 
     '' [[ FORM CLOSE ]]
     Private Sub Form1_Leave(sender As Object, e As EventArgs) Handles Me.FormClosing
-        OpenAllInBrowser = False   ' This is to reset the variable to False, because
-        ' sometimes closing the form doesn't reset the variables.
+        OpenAllInBrowser = False
 
         ' Serial reset
         If SerialPort1.IsOpen = True Then

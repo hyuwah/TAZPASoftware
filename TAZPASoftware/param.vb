@@ -1,7 +1,6 @@
-﻿''' Data.vb
-''' Specifies filehelpers setting for param used in form1.vb
-''' Structure for parameter saved or loaded by software
-
+﻿' param.vb
+' Specifies filehelpers setting for param used in form1.vb
+' Structure for parameter saved or loaded by software
 '-> Never forget:  Imports FileHelpers
 Imports FileHelpers
 

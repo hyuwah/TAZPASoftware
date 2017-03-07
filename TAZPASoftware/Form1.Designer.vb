@@ -80,6 +80,7 @@ Partial Class Form1
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.gbGrafik = New System.Windows.Forms.GroupBox()
+        Me.liveChart1 = New LiveCharts.WinForms.CartesianChart()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.btnSaveData = New MaterialSkin.Controls.MaterialRaisedButton()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -220,7 +221,7 @@ Partial Class Form1
         '
         'ColumnHeader3
         '
-        Me.ColumnHeader3.Text = "ZP(mV)"
+        Me.ColumnHeader3.Text = "Ez(mV)"
         Me.ColumnHeader3.Width = 84
         '
         'gbParameter
@@ -701,6 +702,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbGrafik.BackColor = System.Drawing.Color.White
+        Me.gbGrafik.Controls.Add(Me.liveChart1)
         Me.gbGrafik.Controls.Add(Me.Panel2)
         Me.gbGrafik.Controls.Add(Me.Chart1)
         Me.gbGrafik.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -710,6 +712,18 @@ Partial Class Form1
         Me.gbGrafik.TabIndex = 44
         Me.gbGrafik.TabStop = False
         Me.gbGrafik.Text = "Grafik"
+        '
+        'liveChart1
+        '
+        Me.liveChart1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.liveChart1.Location = New System.Drawing.Point(8, 21)
+        Me.liveChart1.Margin = New System.Windows.Forms.Padding(5)
+        Me.liveChart1.Name = "liveChart1"
+        Me.liveChart1.Size = New System.Drawing.Size(440, 257)
+        Me.liveChart1.TabIndex = 42
+        Me.liveChart1.Text = "CartesianChart1"
         '
         'Panel2
         '
@@ -740,17 +754,24 @@ Partial Class Form1
         '
         'Chart1
         '
-        Me.Chart1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Chart1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        ChartArea1.AxisX.IsLabelAutoFit = False
         ChartArea1.AxisX.IsStartedFromZero = False
+        ChartArea1.AxisX.LabelStyle.Font = New System.Drawing.Font("Roboto", 7.0!)
         ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray
         ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.LightGray
         ChartArea1.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash
         ChartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
         ChartArea1.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.Gray
-        ChartArea1.AxisX.Title = "Waktu"
+        ChartArea1.AxisX.ScrollBar.Size = 12.0R
+        ChartArea1.AxisX.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 6.0!)
         ChartArea1.AxisX.ToolTip = "Waktu"
+        ChartArea1.AxisY.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
+        ChartArea1.AxisY.IsLabelAutoFit = False
+        ChartArea1.AxisY.IsStartedFromZero = False
+        ChartArea1.AxisY.LabelStyle.Font = New System.Drawing.Font("Roboto", 7.0!)
+        ChartArea1.AxisY.LabelStyle.Interval = 0R
         ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Gray
         ChartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dash
         ChartArea1.AxisY.MajorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis
@@ -759,36 +780,41 @@ Partial Class Form1
         ChartArea1.AxisY.MinorTickMark.Enabled = True
         ChartArea1.AxisY.MinorTickMark.Size = 0.5!
         ChartArea1.AxisY.MinorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.InsideArea
-        ChartArea1.AxisY.Title = "Potensial Zeta (mV)"
+        ChartArea1.AxisY.TitleFont = New System.Drawing.Font("Microsoft Sans Serif", 6.0!)
+        ChartArea1.AxisY2.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount
         ChartArea1.CursorX.IsUserEnabled = True
         ChartArea1.CursorX.IsUserSelectionEnabled = True
         ChartArea1.Name = "ChartArea1"
         Me.Chart1.ChartAreas.Add(ChartArea1)
         Legend1.DockedToChartArea = "ChartArea1"
         Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top
+        Legend1.Enabled = False
         Legend1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!)
         Legend1.IsTextAutoFit = False
         Legend1.Name = "Legend1"
         Me.Chart1.Legends.Add(Legend1)
-        Me.Chart1.Location = New System.Drawing.Point(6, 19)
+        Me.Chart1.Location = New System.Drawing.Point(6, 284)
         Me.Chart1.Name = "Chart1"
         Series1.BorderWidth = 2
         Series1.ChartArea = "ChartArea1"
         Series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line
         Series1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!)
         Series1.Legend = "Legend1"
-        Series1.MarkerBorderColor = System.Drawing.Color.Transparent
-        Series1.MarkerSize = 8
+        Series1.MarkerBorderColor = System.Drawing.Color.DodgerBlue
+        Series1.MarkerBorderWidth = 2
+        Series1.MarkerColor = System.Drawing.Color.White
+        Series1.MarkerSize = 6
         Series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle
         Series1.Name = "Potensial Zeta"
         Series1.ToolTip = "#VAL{G} mV"
         Me.Chart1.Series.Add(Series1)
-        Me.Chart1.Size = New System.Drawing.Size(444, 363)
+        Me.Chart1.Size = New System.Drawing.Size(444, 98)
         Me.Chart1.TabIndex = 38
         Me.Chart1.Text = "Chart1"
         Title1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!)
         Title1.Name = "Title1"
         Title1.Text = "Grafik Potensial Zeta"
+        Title1.Visible = False
         Me.Chart1.Titles.Add(Title1)
         '
         'TabPage1
@@ -1015,4 +1041,5 @@ Partial Class Form1
     Friend WithEvents wbHelp As WebBrowser
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
+    Friend WithEvents liveChart1 As LiveCharts.WinForms.CartesianChart
 End Class
